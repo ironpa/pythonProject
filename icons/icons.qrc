@@ -1,0 +1,40 @@
+<RCC>
+  <qresource prefix="main">
+    <file>icons8-country-64.png</file>
+  </qresource>
+  <qresource prefix="editors">
+    <file>icons8-filter-64.png</file>
+    <file>icons8-cleanup-noise-50.png</file>
+    <file>icons8-grayscale-48.png</file>
+    <file>icons8-smooth-50.png</file>
+    <file>icons8-blur-50.png</file>
+    <file>icons8-broken-bottle-64.png</file>
+    <file>icons8-grayscale-50.png</file>
+    <file>icons8-sharp-80.png</file>
+    <file>icons8-blur-50.png</file>
+    <file>icons8-kernel-64.png</file>
+    <file>icons8-invert-colors-64.png</file>
+    <file>icons8-3d-touch-80.png</file>
+    <file>icons8-crop-64.png</file>
+    <file>icons8-cut-64.png</file>
+    <file>icons8-edit-image-64.png</file>
+    <file>icons8-flip-vertical-64.png</file>
+    <file>icons8-no-rotation-64.png</file>
+    <file>icons8-resize-64.png</file>
+    <file>icons8-rotate-64.png</file>
+    <file>icons8-rotate-right-64.png</file>
+    <file>icons8-trash-64.png</file>
+    <file>icons8-world-map-64.png</file>
+    <file>icons8-zoom-in-64.png</file>
+    <file>icons8-zoom-out-64.png</file>
+    <file>icons8-zoom-to-actual-size-64.png</file>
+    <file>icons8-zoom-to-extents-64.png</file>
+  </qresource>
+  <qresource prefix="menu">
+    <file>icons8-information-64.png</file>
+    <file>icons8-open-document-64.png</file>
+    <file>icons8-opened-folder-64.png</file>
+    <file>icons8-exit-sign-64.png</file>
+    <file>icons8-image-file-64.png</file>
+  </qresource>
+</RCC>
