@@ -41,7 +41,7 @@ class KernelTableModel3x3(qtc.QAbstractTableModel):
                 print("Index Error!!")
 class KernelTableModel(qtc.QAbstractTableModel):
 
-    def __init__(self,matrix):
+    def __init__(self, matrix):
         super().__init__()
         self.matrix = matrix
 
@@ -73,6 +73,7 @@ class KernelTableModel(qtc.QAbstractTableModel):
 
             except IndexError:
                 print("Index Error!!")
+
 
 class FilterImageKernel(qtw.QWidget, Ui_mw_kernel):
     matrix_3_3 = [0, -0.5, 0], [-0.5, 3, -0.5], [0, -0.5, 0]
@@ -116,8 +117,3 @@ class FilterImageKernel(qtw.QWidget, Ui_mw_kernel):
             self.prepare_values(self.data_model1.matrix)
             self._window.filter_kernel_image((3,3),self.tuple, self.dsb_scale_kernel_3x3.value(), self.dsb_offset_kernel_3x3.value())
 
-    # def kernel_3_3_apply_button_enabler(self):
-    #     if self.dsb_scale_kernel_3x3.value() != 0 and self.dsb_offset_kernel_3x3 !=0:
-    #         self.pb_apply_kernel_3x3.setEnabled(True)
-    #     else:
-    #         self.pb_apply_kernel_3x3.setEnabled(False)

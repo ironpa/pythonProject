@@ -4,6 +4,7 @@
   </qresource>
   <qresource prefix="editors">
     <file>icons8-filter-64.png</file>
+    <file>icons8-rgb-64.png</file>
     <file>icons8-cleanup-noise-50.png</file>
     <file>icons8-grayscale-48.png</file>
     <file>icons8-smooth-50.png</file>

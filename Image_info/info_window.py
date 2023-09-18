@@ -17,20 +17,16 @@ class TableModel(qtc.QAbstractTableModel):
         super().__init__()
         self.image_data = data
         for key in data.keys():
-            print("woow", data[key])
             self.im_data.append(str(key))
             self.im_data.append(str(data[key]))
 
     def rowCount(self, parent=qtc.QModelIndex()):
-        print("policzyło", len(self.image_data))
         return len(self.image_data)
 
     def columnCount(self, parent=qtc.QModelIndex()):
-        print("kolumny...")
         return 2
 
     def data(self, index, role=qtc.Qt.ItemDataRole.DisplayRole):
-        print("jestem w data!")
 
         if role == qtc.Qt.ItemDataRole.DisplayRole:
             try:
@@ -49,10 +45,8 @@ class ImageInfo(qtw.QWidget, Ui_mw_image_info):
         super().__init__()
         self.data_model = TableModel(data)
         self.setupUi(self)
-        print("bbbbbbb")
         self.tableView.setModel(self.data_model)
         self.show()
-        print("xoxoxoxo")
 
 
 _data = {

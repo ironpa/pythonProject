@@ -16,6 +16,7 @@ from Image_info.info_window import ImageInfo
 from Image_resize.resize_window import ImageResize
 from Image_crop.crop_window import ImageCrop
 from Image_kernel.filter_kernel_window import FilterImageKernel
+from Image_pixel_info.pixel_info_window import ImagePixelInfo
 
 class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
@@ -30,6 +31,12 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     imageCropUI = None
     imageResizeUI = None
     imageFilterUI = None
+    imagePixelInfoUI = None
+    imageFilterKernelUI = None
+    # Image pixel values initial variables
+    image_bands = ()
+    image_band_values = ()
+    image_pixel_values = (0,0)
     _data = {
     "brand": "Ford",
     "model": "Mustang",
@@ -61,7 +68,10 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_find_edges.clicked.connect(self.find_edges)
         self.pb_emboss.clicked.connect(self.emboss)
         self.pb_kernel.clicked.connect(self.kernel_image_open)
-
+        self.pb_showRGB.clicked.connect(self.pixel_info_open)
+    def pixel_info_open(self):
+        self.pb_showRGB.setEnabled(False)
+        self.imagePixelInfoUI = ImagePixelInfo(self, self.image_bands, self.image_band_values, self.image_pixel_values)
     def kernel_image_open(self):
         self.pb_kernel.setEnabled(False)
         self.imageFilterKernelUI = FilterImageKernel(self)
@@ -102,6 +112,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     def to_grayscale(self):
         self.image_to_edit = self.image_to_edit.convert("L")
         self.image_display(self.image_to_edit)
+        self.update_values()
     def smooth_image(self):
         self.image_to_edit = self.image_to_edit.filter(ImageFilter.SMOOTH)
         self.image_display(self.image_to_edit)
@@ -116,9 +127,17 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
         self.image_to_edit = self.image_to_edit.resize(size, 1)
         self.update_values()
+    def updateImageColorBands(self):
+        self.image_bands = self.image_to_edit.getbands()
+        if self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible():
+            self.imagePixelInfoUI.data_model._mode = self.image_bands
+            self.imagePixelInfoUI.data_model._values = self.image_band_values
+            self.imagePixelInfoUI.data_model._pos = self.image_pixel_values
+            self.imagePixelInfoUI.data_model.layoutChanged.emit()
     def update_values(self):
         self.image_size = self.image_to_edit.size
         self.image_display(self.image_to_edit)
+        self.updateImageColorBands()
         self.updateViews()
     def sharpen_image(self):
         self.image_to_edit = self.image_to_edit.filter(ImageFilter.SHARPEN)
@@ -128,12 +147,15 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.image_display(self.image_to_edit)
     # funkcjonalnosc resize - dorobic resampling i resize region
     def updateViews(self):
-        if self.imageResizeUI != None and self.imageResizeUI.isVisible():
+        if self.imageResizeUI is not None and self.imageResizeUI.isVisible():
             self.imageResizeUI.data_model.im_width, self.imageResizeUI.data_model.im_height = self.image_to_edit.size
             self.imageResizeUI.data_model.layoutChanged.emit()
-        if self.imageCropUI != None and self.imageCropUI.isVisible():
+        if self.imageCropUI is not None and self.imageCropUI.isVisible():
             self.imageCropUI.data_model.im_width, self.imageCropUI.data_model.im_height  = self.image_to_edit.size
             self.imageCropUI.data_model.layoutChanged.emit()
+        if self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible():
+            self.imagePixelInfoUI.data_model._model = self.image_to_edit.getbands()
+            self.imagePixelInfoUI.data_model.layoutChanged.emit()
 
     def print_to_dialog(self, window_size):
         print(window_size)
@@ -150,22 +172,19 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
         # self.closeWindows((self.imageResizeUI,self.imageCropUI,self.imageBlurUI))
 
-        if self.imageCropUI != None:
+        if self.imageCropUI is not None:
             if self.imageCropUI.isVisible():
                 self.imageCropUI.close()
-        if self.imageResizeUI != None:
+        if self.imageResizeUI is not None:
             if self.imageResizeUI.isVisible():
                 self.imageResizeUI.close()
-        if self.imageFilterUI != None:
+        if self.imageFilterUI is not None:
             if self.imageFilterUI.isVisible():
                 self.imageFilterUI.close()
+        if self.imagePixelInfoUI is not None:
+            if self.imagePixelInfoUI.isVisible():
+                self.imagePixelInfoUI.close()
 
-
-    # def closeWindows(self, *qwidgets):
-    #     for i in qwidgets:
-    #         if i != None:
-    #             if i.isVisible():
-    #                 i.close()
 
 
     def clearUp_menu(self):
@@ -185,6 +204,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_find_edges.setEnabled(False)
         self.pb_emboss.setEnabled(False)
         self.pb_kernel.setEnabled(False)
+        self.pb_showRGB.setEnabled(False)
         self.qt_image_description.setText("No image opened...")
     def set_editing_menu(self):
         self.pb_rotate_left.setEnabled(True)
@@ -192,23 +212,42 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_image_description.setEnabled(True)
         self.pb_flip.setEnabled(True)
         self.pb_clear.setEnabled(True)
-        self.pb_clear.setEnabled(True)
         self.pb_invert_colors.setEnabled(True)
-        self.pb_resize.setEnabled(True)
-        self.pb_crop.setEnabled(True)
-        self.pb_blur.setEnabled(True)
+        if not (self.imageResizeUI is not None and self.imageResizeUI.isVisible()):
+            self.pb_resize.setEnabled(True)
+        if not (self.imageCropUI is not None and self.imageCropUI.isVisible()):
+            self.pb_crop.setEnabled(True)
+        if not (self.imageFilterUI is not None and self.imageFilterUI.isVisible()):
+            self.pb_blur.setEnabled(True)
         self.pb_sharpen.setEnabled(True)
         self.pb_grayscale.setEnabled(True)
         self.pb_smooth.setEnabled(True)
         self.pb_find_edges.setEnabled(True)
         self.pb_emboss.setEnabled(True)
-        self.pb_kernel.setEnabled(True)
+        if not (self.imageFilterKernelUI is not None and self.imageFilterKernelUI.isVisible()):
+            self.pb_kernel.setEnabled(True)
+        if not (self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible()):
+            self.pb_showRGB.setEnabled(True)
 
     def closeEvent(self, event) -> None:
+
+
         try:
-            if isinstance(self.image_to_edit, Image):
+            if self.imageFilterKernelUI is not None and self.imageFilterKernelUI.isVisible():
+                self.imageFilterKernelUI.close()
+            if self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible():
+                self.imagePixelInfoUI.close()
+            if self.imageCropUI is not None and self.imageCropUI.isVisible():
+                self.imageCropUI.close()
+            if self.imageFilterUI is not None and self.imageFilterUI.isVisible():
+                self.imageFilterUI.close()
+            if self.imageResizeUI is not None and self.imageResizeUI.isVisible():
+                self.imageResizeUI.close()
+            if self.image_to_edit is not None:
                 print("just about to close:", self.filename)
                 self.image_to_edit.close()
+
+
         except (RuntimeError, TypeError, NameError):
             print("Oh no... Image not closed...")
 
@@ -241,13 +280,20 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
                 self.point = point
                 self.ql_coordinates.setText("(%d,%d)" % self.point)
     def mouseDoubleClickEvent(self, event):
+        print(self.image_to_edit.getpixel(self.point))
+        if self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible():
+            self.imagePixelInfoUI.data_model._values = self.image_to_edit.getpixel(self.point)
+            self.imagePixelInfoUI.data_model._pos = self.point
+            self.imagePixelInfoUI.data_model.layoutChanged.emit()
+
         if self.imageCropUI != None and self.imageCropUI.isVisible():
-            print("self.point")
-            if self.imageCropUI.rb_upper_left.isChecked()==True:
+
+            if self.imageCropUI.rb_upper_left.isChecked():
                 self.point1 = self.point
                 self.imageCropUI.le_p1_x.setText(str(self.point[0]))
                 self.imageCropUI.le_p1_y.setText(str(self.point[1]))
-            if self.imageCropUI.rb_lower_right.isChecked() == True:
+
+            if self.imageCropUI.rb_lower_right.isChecked():
                 self.point2 = self.point
                 self.imageCropUI.le_p2_x.setText(str(self.point[0]))
                 self.imageCropUI.le_p2_y.setText(str(self.point[1]))
@@ -261,7 +307,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     def openFile(self):
         file_Dialog = QFileDialog()
         #file_Dialog.setNameFilters("Images (*.png *.jpg *.tiff")
-        file_Dialog.setNameFilters(["Images (*.png *.jpg *.tiff *.tif)"])
+        file_Dialog.setNameFilters(["Images (*.png *.jpg *.tiff *.tif *.jpeg)"])
         file_Dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
         is_File_Selected = file_Dialog.exec()
 
@@ -276,7 +322,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.set_editing_menu()
             self.image_size = self.image_to_edit.size
             print(self.image_size)
-            bands = self.image_to_edit.getbands()
+            # bands = self.image_to_edit.getbands()
             self.file_info = ""
             self.image_display(self.image_to_edit)
             print(type(self.image_to_edit.info))
@@ -285,14 +331,28 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
                 self.file_info += str(k) +": "+ str(v)+"\n"
 
             print(self.file_info)
-            self.qt_image_description.setText(self.file_info+self.image_to_edit.format +" "+ self.image_to_edit.mode)
+            self.populate_initial_pixel_values(self.image_to_edit)
+            print(self.image_band_values)
+            if self.image_to_edit.mode != 'CMYK':
+                self.qt_image_description.setText(self.file_info+self.image_to_edit.format +" "+ self.image_to_edit.mode)
+            else:
+                self.qt_image_description.setText(self.image_to_edit.format + " "+self.image_to_edit.mode)
+            self.update_values()
             print(self.image_to_edit.format, self.image_to_edit.mode)
             print(path)
         else:
             print("No file selected")
     def image_display(self, image):
-        pixel_map = qtg.QPixmap(image.toqimage())
+        img = image.convert("RGB")
+        pixel_map = qtg.QPixmap(img.toqimage())
         self.qt_label.setPixmap(pixel_map)
+    def populate_initial_pixel_values(self, image):
+        self.image_bands = image.getbands()
+        self.image_band_values = ()
+        self.image_pixel_values = (0,0)
+        for _ in self.image_bands:
+            self.image_band_values = self.image_band_values + (0,)
+
 
 
 
