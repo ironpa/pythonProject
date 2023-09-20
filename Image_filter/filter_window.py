@@ -12,6 +12,7 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
         self.pb_apply_box.clicked.connect(self.blur_box_image)
         self.pb_apply_gaussian.clicked.connect(self.blur_gaussian_image)
         self.pb_apply_rank.clicked.connect(self.rank_image)
+        self.pb_apply_unsharp.clicked.connect(self.unsharp_image)
         self.rb_3x3.setChecked(True)
         self.rb_min.setChecked(True)
         self.show()
@@ -20,6 +21,8 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
         if self._window.image_to_edit != None:
             self._window.pb_blur.setEnabled(True)
 
+    def unsharp_image(self):
+        self._window.unsharp_mask(self.sb_unsharp_radius.value(), self.sb_un_procent.value(), self.sb_unsharp_threshold.value())
     def blur_box_image(self):
         self._window.blur_image(self.sb_box.value(),0)
     def blur_gaussian_image(self):

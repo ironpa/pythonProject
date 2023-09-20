@@ -5,9 +5,8 @@ from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 from PySide6 import QtGui as qtg
 from PySide6.QtWidgets import QFileDialog
-from PySide6.QtGui import QCursor
 from PIL import Image,ImageQt, ImageChops, ImageFilter
-from tr import tr
+
 
 
 from Main.UI.main_window import Ui_mw_Main
@@ -89,10 +88,15 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         if scale==0 and offset==0:
             self.image_to_edit = self.image_to_edit.filter(ImageFilter.Kernel(size,kernel))
         elif scale == 0:
-            self.image_to_edit = self.image_to_edit.filter(ImageFilter.Kernel(size,kernel,None,offset))
+            self.image_to_edit = self.image_to_edit.filter(ImageFilter.Kernel(size, kernel, None, offset))
         else:
             self.image_to_edit = self.image_to_edit.filter(ImageFilter.Kernel(size, kernel, scale, offset))
         self.image_display(self.image_to_edit)
+
+    def unsharp_mask(self,radius, percent, threshold):
+        self.image_to_edit = self.image_to_edit.filter(ImageFilter.UnsharpMask(radius, percent, threshold))
+        self.image_display(self.image_to_edit)
+
     def blur_image(self, radius, type):
         if type == 0:
             self.image_to_edit = self.image_to_edit.filter(ImageFilter.BoxBlur(radius))

@@ -63,12 +63,6 @@ class ResizeTableModel(qtc.QAbstractTableModel):
 
             except IndexError:
                 print("Index Error!!")
-        # if role == qtc.Qt.ItemDataRole.EditRole:
-        #     try :
-        #         if index.row() == 0 and index.column() == 1:
-        #             return self.im_height cell
-        #         elif index.row() == 1 and index.column() == 1:
-        #
 
 class ImageResize(qtw.QWidget, Ui_mw_image_resize):
 
