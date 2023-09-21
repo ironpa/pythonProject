@@ -26,6 +26,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     points = ""
     file_info = ""
     image_to_edit = None
+    image_to_restore = None
     image_size = ""
     imageCropUI = None
     imageResizeUI = None
@@ -68,12 +69,17 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_emboss.clicked.connect(self.emboss)
         self.pb_kernel.clicked.connect(self.kernel_image_open)
         self.pb_showRGB.clicked.connect(self.pixel_info_open)
+        self.pb_revert.clicked.connect(self.revert_changes)
     def pixel_info_open(self):
         self.pb_showRGB.setEnabled(False)
         self.imagePixelInfoUI = ImagePixelInfo(self, self.image_bands, self.image_band_values, self.image_pixel_values)
     def kernel_image_open(self):
         self.pb_kernel.setEnabled(False)
         self.imageFilterKernelUI = FilterImageKernel(self)
+    def revert_changes(self):
+        if self.image_to_restore is not None:
+            self.image_to_edit = self.image_to_restore
+            self.image_display(self.image_to_edit)
     def resize_image_open(self):
         self.pb_resize.setEnabled(False)
         self.imageResizeUI = ImageResize(self)
@@ -85,6 +91,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_blur.setEnabled(False)
         self.imageFilterUI = Image_Filter(self)
     def filter_kernel_image(self,size,kernel,scale,offset):
+        # print("size"+str(size)+"kernel: "+str(kernel)+"scale:"+str(scale)+"offset:"+str(offset))
         if scale==0 and offset==0:
             self.image_to_edit = self.image_to_edit.filter(ImageFilter.Kernel(size,kernel))
         elif scale == 0:
@@ -209,6 +216,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_emboss.setEnabled(False)
         self.pb_kernel.setEnabled(False)
         self.pb_showRGB.setEnabled(False)
+        self.pb_revert.setEnabled(False)
         self.qt_image_description.setText("No image opened...")
     def set_editing_menu(self):
         self.pb_rotate_left.setEnabled(True)
@@ -224,6 +232,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         if not (self.imageFilterUI is not None and self.imageFilterUI.isVisible()):
             self.pb_blur.setEnabled(True)
         self.pb_sharpen.setEnabled(True)
+        if self.image_to_restore is not None:
+            self.pb_revert.setEnabled(True)
         self.pb_grayscale.setEnabled(True)
         self.pb_smooth.setEnabled(True)
         self.pb_find_edges.setEnabled(True)
@@ -323,6 +333,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.filename = file_Dialog.selectedFiles().pop(0)
             path = pathlib.Path(self.filename)
             self.image_to_edit = Image.open(path)
+            self.image_to_restore = self.image_to_edit
             self.set_editing_menu()
             self.image_size = self.image_to_edit.size
             print(self.image_size)

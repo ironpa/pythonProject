@@ -84,8 +84,10 @@ class Ui_mw_kernel(object):
         self.dsb_offset_kernel_3x3.setObjectName(u"dsb_offset_kernel_3x3")
         self.dsb_offset_kernel_3x3.setMinimumSize(QSize(60, 0))
         self.dsb_offset_kernel_3x3.setMaximumSize(QSize(60, 16777215))
-        self.dsb_offset_kernel_3x3.setMinimum(-100.000000000000000)
-        self.dsb_offset_kernel_3x3.setMaximum(100.000000000000000)
+        self.dsb_offset_kernel_3x3.setLayoutDirection(Qt.LeftToRight)
+        self.dsb_offset_kernel_3x3.setDecimals(0)
+        self.dsb_offset_kernel_3x3.setMinimum(-255.000000000000000)
+        self.dsb_offset_kernel_3x3.setMaximum(255.000000000000000)
 
         self.verticalLayout_8.addWidget(self.dsb_offset_kernel_3x3)
 
@@ -157,6 +159,9 @@ class Ui_mw_kernel(object):
         self.dsb_offset_kernel_5x5.setObjectName(u"dsb_offset_kernel_5x5")
         self.dsb_offset_kernel_5x5.setMinimumSize(QSize(60, 0))
         self.dsb_offset_kernel_5x5.setMaximumSize(QSize(60, 16777215))
+        self.dsb_offset_kernel_5x5.setDecimals(0)
+        self.dsb_offset_kernel_5x5.setMinimum(-255.000000000000000)
+        self.dsb_offset_kernel_5x5.setMaximum(255.000000000000000)
 
         self.verticalLayout_3.addWidget(self.dsb_offset_kernel_5x5)
 
@@ -185,7 +190,7 @@ class Ui_mw_kernel(object):
 
         self.retranslateUi(mw_kernel)
 
-        self.tw_kernel.setCurrentIndex(0)
+        self.tw_kernel.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(mw_kernel)
@@ -199,8 +204,8 @@ class Ui_mw_kernel(object):
         self.pb_apply_kernel_3x3.setText(QCoreApplication.translate("mw_kernel", u"Apply", None))
         self.tw_kernel.setTabText(self.tw_kernel.indexOf(self.tab), QCoreApplication.translate("mw_kernel", u"3x3", None))
         self.label_12.setText(QCoreApplication.translate("mw_kernel", u"kernel matrix:", None))
-        self.label_14.setText(QCoreApplication.translate("mw_kernel", u"offset:", None))
-        self.label_13.setText(QCoreApplication.translate("mw_kernel", u"scale:", None))
+        self.label_14.setText(QCoreApplication.translate("mw_kernel", u"scale", None))
+        self.label_13.setText(QCoreApplication.translate("mw_kernel", u"offset:", None))
         self.pb_apply_kernel_5x5.setText(QCoreApplication.translate("mw_kernel", u"Apply", None))
         self.tw_kernel.setTabText(self.tw_kernel.indexOf(self.tab_2), QCoreApplication.translate("mw_kernel", u"5x5", None))
     # retranslateUi

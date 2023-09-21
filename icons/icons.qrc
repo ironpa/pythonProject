@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="main">
     <file>icons8-country-64.png</file>
+    <file>icons8-revert-64.png</file>
   </qresource>
   <qresource prefix="editors">
     <file>icons8-filter-64.png</file>

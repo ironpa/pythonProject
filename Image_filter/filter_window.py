@@ -8,7 +8,7 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
         self._window = window
         self.setupUi(self)
         self.sb_box.valueChanged.connect(self.box_apply_button_enabler)
-        self.sb_gaussian.valueChanged.connect(self.gaussian_apply_button_enabler)
+        self.dsb_gaussian.valueChanged.connect(self.gaussian_apply_button_enabler)
         self.pb_apply_box.clicked.connect(self.blur_box_image)
         self.pb_apply_gaussian.clicked.connect(self.blur_gaussian_image)
         self.pb_apply_rank.clicked.connect(self.rank_image)
@@ -26,7 +26,7 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
     def blur_box_image(self):
         self._window.blur_image(self.sb_box.value(),0)
     def blur_gaussian_image(self):
-        self._window.blur_image(self.sb_gaussian.value(),1)
+        self._window.blur_image(self.dsb_gaussian.value(),1)
     def rank_image(self):
         if self.rb_3x3.isChecked():
             size = 3
@@ -48,8 +48,8 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
             self.pb_apply_box.setEnabled(False)
 
     def gaussian_apply_button_enabler(self):
-        print(self.sb_gaussian.value())
-        if self.sb_gaussian.value() != 0:
+        print(self.dsb_gaussian.value())
+        if self.dsb_gaussian.value() != 0:
             self.pb_apply_gaussian.setEnabled(True)
         else:
             self.pb_apply_gaussian.setEnabled(False)

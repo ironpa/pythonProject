@@ -26,7 +26,7 @@ class Ui_mw_Main(object):
     def setupUi(self, mw_Main):
         if not mw_Main.objectName():
             mw_Main.setObjectName(u"mw_Main")
-        mw_Main.resize(1061, 700)
+        mw_Main.resize(1116, 700)
         icon = QIcon()
         icon.addFile(u":/menu/icons8-exit-sign-64.png", QSize(), QIcon.Normal, QIcon.Off)
         mw_Main.setWindowIcon(icon)
@@ -272,6 +272,18 @@ class Ui_mw_Main(object):
 
         self.horizontalLayout.addWidget(self.pb_showRGB)
 
+        self.pb_revert = QPushButton(self.fb_group_box)
+        self.pb_revert.setObjectName(u"pb_revert")
+        self.pb_revert.setEnabled(False)
+        self.pb_revert.setMinimumSize(QSize(50, 50))
+        self.pb_revert.setMaximumSize(QSize(50, 50))
+        icon18 = QIcon()
+        icon18.addFile(u":/main/icons8-revert-64.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pb_revert.setIcon(icon18)
+        self.pb_revert.setIconSize(QSize(32, 32))
+
+        self.horizontalLayout.addWidget(self.pb_revert)
+
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
@@ -280,9 +292,9 @@ class Ui_mw_Main(object):
         self.pb_clear.setObjectName(u"pb_clear")
         self.pb_clear.setEnabled(False)
         self.pb_clear.setMaximumSize(QSize(50, 50))
-        icon18 = QIcon()
-        icon18.addFile(u":/editors/icons8-trash-64.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pb_clear.setIcon(icon18)
+        icon19 = QIcon()
+        icon19.addFile(u":/editors/icons8-trash-64.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pb_clear.setIcon(icon19)
         self.pb_clear.setIconSize(QSize(32, 32))
 
         self.horizontalLayout.addWidget(self.pb_clear)
@@ -303,7 +315,7 @@ class Ui_mw_Main(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1035, 515))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1090, 515))
         self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -368,7 +380,7 @@ class Ui_mw_Main(object):
         mw_Main.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(mw_Main)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1061, 24))
+        self.menubar.setGeometry(QRect(0, 0, 1116, 24))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuEdit = QMenu(self.menubar)
@@ -471,6 +483,10 @@ class Ui_mw_Main(object):
         self.pb_showRGB.setToolTip(QCoreApplication.translate("mw_Main", u"Show RGB valuse", None))
 #endif // QT_CONFIG(tooltip)
         self.pb_showRGB.setText("")
+#if QT_CONFIG(tooltip)
+        self.pb_revert.setToolTip(QCoreApplication.translate("mw_Main", u"Revert changes to an image", None))
+#endif // QT_CONFIG(tooltip)
+        self.pb_revert.setText("")
 #if QT_CONFIG(tooltip)
         self.pb_clear.setToolTip(QCoreApplication.translate("mw_Main", u"Remove image", None))
 #endif // QT_CONFIG(tooltip)

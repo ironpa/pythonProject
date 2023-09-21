@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QButtonGroup, QFrame, QHBoxLayout,
-    QLabel, QPushButton, QRadioButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QButtonGroup, QDoubleSpinBox, QFrame,
+    QHBoxLayout, QLabel, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 class Ui_mw_filter_image(object):
     def setupUi(self, mw_filter_image):
@@ -81,18 +82,11 @@ class Ui_mw_filter_image(object):
 
         self.horizontalLayout_2.addWidget(self.label_4)
 
-        self.sb_gaussian = QSpinBox(mw_filter_image)
-        self.sb_gaussian.setObjectName(u"sb_gaussian")
-        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sb_gaussian.sizePolicy().hasHeightForWidth())
-        self.sb_gaussian.setSizePolicy(sizePolicy)
-        self.sb_gaussian.setMinimumSize(QSize(0, 0))
-        self.sb_gaussian.setMaximumSize(QSize(40, 16777215))
-        self.sb_gaussian.setMaximum(50)
+        self.dsb_gaussian = QDoubleSpinBox(mw_filter_image)
+        self.dsb_gaussian.setObjectName(u"dsb_gaussian")
+        self.dsb_gaussian.setDecimals(3)
 
-        self.horizontalLayout_2.addWidget(self.sb_gaussian)
+        self.horizontalLayout_2.addWidget(self.dsb_gaussian)
 
         self.pb_apply_gaussian = QPushButton(mw_filter_image)
         self.pb_apply_gaussian.setObjectName(u"pb_apply_gaussian")
@@ -211,6 +205,9 @@ class Ui_mw_filter_image(object):
 
         self.sb_unsharp_radius = QSpinBox(mw_filter_image)
         self.sb_unsharp_radius.setObjectName(u"sb_unsharp_radius")
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sb_unsharp_radius.sizePolicy().hasHeightForWidth())
         self.sb_unsharp_radius.setSizePolicy(sizePolicy)
         self.sb_unsharp_radius.setMinimumSize(QSize(0, 0))
@@ -220,14 +217,14 @@ class Ui_mw_filter_image(object):
 
         self.horizontalLayout_5.addWidget(self.sb_unsharp_radius)
 
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_3)
+
         self.label_8 = QLabel(mw_filter_image)
         self.label_8.setObjectName(u"label_8")
 
         self.horizontalLayout_5.addWidget(self.label_8)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_5.addItem(self.horizontalSpacer_3)
 
         self.sb_un_procent = QSpinBox(mw_filter_image)
         self.sb_un_procent.setObjectName(u"sb_un_procent")
