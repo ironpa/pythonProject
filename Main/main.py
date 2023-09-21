@@ -16,6 +16,7 @@ from Image_resize.resize_window import ImageResize
 from Image_crop.crop_window import ImageCrop
 from Image_kernel.filter_kernel_window import FilterImageKernel
 from Image_pixel_info.pixel_info_window import ImagePixelInfo
+from Image_threshold.threshold_window import ImageThreshold
 
 class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
@@ -33,6 +34,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     imageFilterUI = None
     imagePixelInfoUI = None
     imageFilterKernelUI = None
+    imageTresholdUI = None
+    image_extrema = ()
     # Image pixel values initial variables
     image_bands = ()
     image_band_values = ()
@@ -70,6 +73,15 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_kernel.clicked.connect(self.kernel_image_open)
         self.pb_showRGB.clicked.connect(self.pixel_info_open)
         self.pb_revert.clicked.connect(self.revert_changes)
+        self.pb_detail.clicked.connect(self.detail_image)
+        self.pb_threshold.clicked.connect(self.threshold_image_open)
+
+    def threshold_image_open(self):
+        self.pb_threshold.setEnabled(False)
+        self.imageTresholdUI = ImageThreshold(self)
+    def detail_image(self):
+        self.image_to_edit = self.image_to_edit.filter(ImageFilter.DETAIL)
+        self.image_display(self.image_to_edit)
     def pixel_info_open(self):
         self.pb_showRGB.setEnabled(False)
         self.imagePixelInfoUI = ImagePixelInfo(self, self.image_bands, self.image_band_values, self.image_pixel_values)
@@ -78,11 +90,22 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.imageFilterKernelUI = FilterImageKernel(self)
     def revert_changes(self):
         if self.image_to_restore is not None:
+            print(str(self.image_to_restore.getbands()))
             self.image_to_edit = self.image_to_restore
+            self.set_editing_menu()
             self.image_display(self.image_to_edit)
+
+
     def resize_image_open(self):
         self.pb_resize.setEnabled(False)
         self.imageResizeUI = ImageResize(self)
+    def set_threshold(self, value):
+        self.image_to_edit = self.image_to_edit.point(
+            lambda x: 255 if x > value else 0
+        )
+        self.image_extrema = self.image_to_edit.getextrema()
+        self.imageTresholdUI.update_extrema(self.image_extrema)
+        self.image_display(self.image_to_edit)
     def crop_image_open(self):
         # self.crop_image()
         self.pb_crop.setEnabled(False)
@@ -122,6 +145,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.image_display(self.image_to_edit)
     def to_grayscale(self):
         self.image_to_edit = self.image_to_edit.convert("L")
+        self.image_extrema = self.image_to_edit.getextrema()
+        self.pb_threshold.setEnabled(True)
         self.image_display(self.image_to_edit)
         self.update_values()
     def smooth_image(self):
@@ -195,6 +220,9 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         if self.imagePixelInfoUI is not None:
             if self.imagePixelInfoUI.isVisible():
                 self.imagePixelInfoUI.close()
+        if self.imageTresholdUI is not None:
+            if self.imageTresholdUI.isVisible():
+                self.imageTresholdUI.close()
 
 
 
@@ -217,6 +245,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_kernel.setEnabled(False)
         self.pb_showRGB.setEnabled(False)
         self.pb_revert.setEnabled(False)
+        self.pb_detail.setEnabled(False)
+        self.pb_threshold.setEnabled(False)
         self.qt_image_description.setText("No image opened...")
     def set_editing_menu(self):
         self.pb_rotate_left.setEnabled(True)
@@ -224,6 +254,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_image_description.setEnabled(True)
         self.pb_flip.setEnabled(True)
         self.pb_clear.setEnabled(True)
+        self.pb_detail.setEnabled(True)
         self.pb_invert_colors.setEnabled(True)
         if not (self.imageResizeUI is not None and self.imageResizeUI.isVisible()):
             self.pb_resize.setEnabled(True)
@@ -242,6 +273,10 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.pb_kernel.setEnabled(True)
         if not (self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible()):
             self.pb_showRGB.setEnabled(True)
+        if self.image_to_edit is not None and self.image_to_edit.getbands() == ("L",):
+            self.pb_threshold.setEnabled(True)
+        else:
+            self.pb_threshold.setEnabled(False)
 
     def closeEvent(self, event) -> None:
 
@@ -257,9 +292,12 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
                 self.imageFilterUI.close()
             if self.imageResizeUI is not None and self.imageResizeUI.isVisible():
                 self.imageResizeUI.close()
+            if self.imageTresholdUI is not None and self.imageTresholdUI.isVisible():
+                self.imageTresholdUI.close()
             if self.image_to_edit is not None:
                 print("just about to close:", self.filename)
                 self.image_to_edit.close()
+
 
 
         except (RuntimeError, TypeError, NameError):
@@ -338,6 +376,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.image_size = self.image_to_edit.size
             print(self.image_size)
             # bands = self.image_to_edit.getbands()
+            if self.image_to_edit.getbands() == ("L",):
+                self.image_extrema = self.image_to_edit.getextrema()
             self.file_info = ""
             self.image_display(self.image_to_edit)
             print(type(self.image_to_edit.info))
