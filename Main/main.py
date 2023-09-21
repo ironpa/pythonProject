@@ -90,6 +90,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.imageFilterKernelUI = FilterImageKernel(self)
     def revert_changes(self):
         if self.image_to_restore is not None:
+            print(str(self.image_to_restore.getbands()))
             self.image_to_edit = self.image_to_restore
             self.set_editing_menu()
             self.image_display(self.image_to_edit)
