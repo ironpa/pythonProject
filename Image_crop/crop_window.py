@@ -17,22 +17,6 @@ class CropTableModel(qtc.QAbstractTableModel):
 
     def columnCount(self, parent=qtc.QModelIndex()):
         return 2
-    # def setData(self, index, value, role):
-    #
-    #     if role ==qtc.Qt.ItemDataRole.EditRole:
-    #         if index.row() == 0 and index.column() == 1:
-    #
-    #             self.im_height = int(value)
-    #             size = self.im_width, self.im_height
-    #             self._window.update_image_size(size)
-    #             return True
-    #         elif index.row() == 1 and index.column() == 1:
-    #             self.im_width = int(value)
-    #             size = self.im_width, self.im_height
-    #             self._window.update_image_size(size)
-    #             return True
-    #         else:
-    #             return False
 
 
     def data(self, index, role=qtc.Qt.ItemDataRole.DisplayRole):

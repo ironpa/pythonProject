@@ -1,6 +1,6 @@
-from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 from Image_threshold.UI.Image_threshold import Ui_mw_image_threshold
+
 class ImageThreshold(qtw.QWidget, Ui_mw_image_threshold):
 
     def __init__(self, window):

@@ -5,7 +5,7 @@ from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 from PySide6 import QtGui as qtg
 from PySide6.QtWidgets import QFileDialog
-from PIL import Image,ImageQt, ImageChops, ImageFilter
+from PIL import Image, ImageChops, ImageFilter, ImageQt
 
 
 
@@ -17,6 +17,7 @@ from Image_crop.crop_window import ImageCrop
 from Image_kernel.filter_kernel_window import FilterImageKernel
 from Image_pixel_info.pixel_info_window import ImagePixelInfo
 from Image_threshold.threshold_window import ImageThreshold
+from Image_rotate.rotate_window import ImageRotate
 
 class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
@@ -35,6 +36,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     imagePixelInfoUI = None
     imageFilterKernelUI = None
     imageTresholdUI = None
+    imageRotateUI = None
+
     image_extrema = ()
     # Image pixel values initial variables
     image_bands = ()
@@ -55,6 +58,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
         self.action_Quit.triggered.connect(self.close)
         self.action_Open_file.triggered.connect(self.openFile)
+        self.action_save.triggered.connect(self.save_image)
         self.pb_open_file.clicked.connect(self.openFile)
         self.pb_image_description.clicked.connect(self.image_info_open)
         self.pb_rotate_right.clicked.connect(self.rotate_right)
@@ -75,6 +79,10 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_revert.clicked.connect(self.revert_changes)
         self.pb_detail.clicked.connect(self.detail_image)
         self.pb_threshold.clicked.connect(self.threshold_image_open)
+        self.pb_rotate.clicked.connect(self.rotate_image_open)
+    def rotate_image_open(self):
+        self.pb_rotate.setEnabled(False)
+        self.imageRotateUI = ImageRotate(self)
 
     def threshold_image_open(self):
         self.pb_threshold.setEnabled(False)
@@ -91,6 +99,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     def revert_changes(self):
         if self.image_to_restore is not None:
             print(str(self.image_to_restore.getbands()))
+            if self.image_to_restore.getbands() != ("L",) and self.imageTresholdUI is not None and self.imageTresholdUI.isVisible():
+                self.imageTresholdUI.close()
             self.image_to_edit = self.image_to_restore
             self.set_editing_menu()
             self.image_display(self.image_to_edit)
@@ -223,6 +233,9 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         if self.imageTresholdUI is not None:
             if self.imageTresholdUI.isVisible():
                 self.imageTresholdUI.close()
+        if self.imageRotateUI is not None:
+            if self.imageRotateUI.isVisible():
+                self.imageRotateUI.close()
 
 
 
@@ -247,6 +260,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_revert.setEnabled(False)
         self.pb_detail.setEnabled(False)
         self.pb_threshold.setEnabled(False)
+        self.pb_rotate.setEnabled(False)
         self.qt_image_description.setText("No image opened...")
     def set_editing_menu(self):
         self.pb_rotate_left.setEnabled(True)
@@ -268,6 +282,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_grayscale.setEnabled(True)
         self.pb_smooth.setEnabled(True)
         self.pb_find_edges.setEnabled(True)
+        if not(self.imageRotateUI is not None and self.imageRotateUI.isVisible()):
+            self.pb_rotate.setEnabled(True)
         self.pb_emboss.setEnabled(True)
         if not (self.imageFilterKernelUI is not None and self.imageFilterKernelUI.isVisible()):
             self.pb_kernel.setEnabled(True)
@@ -320,6 +336,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.image_display(self.image_to_edit)
         self.update_values()
 
+
     def rotate_left(self):
         self.image_to_edit = self.image_to_edit.transpose(Image.ROTATE_90)
         self.image_display(self.image_to_edit)
@@ -338,6 +355,9 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.imagePixelInfoUI.data_model._pos = self.point
             self.imagePixelInfoUI.data_model.layoutChanged.emit()
 
+        if self.imageRotateUI is not None and self.imageRotateUI.isVisible():
+            self.imageRotateUI.update_point()
+
         if self.imageCropUI != None and self.imageCropUI.isVisible():
 
             if self.imageCropUI.rb_upper_left.isChecked():
@@ -354,6 +374,15 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.showInfoWindow = qtw.QWidget()
         self.ui = ImageInfo(self.image_to_edit.info)
         #self.showInfoWindow.show()
+
+    def save_image(self):
+        image_name = QFileDialog().getSaveFileName(self,'Save file')
+        # self.image_to_write = ImageQt(self.image_to_edit)
+        # self.image_to_write.sa
+        img = self.image_to_edit.convert("RGB")
+        pixel_map = qtg.QPixmap(img.toqimage())
+        print(image_name)
+        pixel_map.save(image_name[0])
 
 
     def openFile(self):
