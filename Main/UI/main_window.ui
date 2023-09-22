@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1116</width>
+    <width>944</width>
     <height>700</height>
    </rect>
   </property>
@@ -302,6 +302,38 @@
             <size>
              <width>35</width>
              <height>30</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_enhance">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../icons/icons.qrc">
+             <normaloff>:/editors/icons8-wand-50.png</normaloff>:/editors/icons8-wand-50.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
           </widget>
@@ -862,7 +894,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1090</width>
+         <width>918</width>
          <height>533</height>
         </rect>
        </property>
@@ -1023,7 +1055,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1116</width>
+     <width>944</width>
      <height>24</height>
     </rect>
    </property>

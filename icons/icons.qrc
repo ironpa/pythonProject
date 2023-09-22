@@ -5,6 +5,7 @@
   </qresource>
   <qresource prefix="editors">
     <file>icons8-filter-64.png</file>
+    <file>icons8-wand-50.png</file>
     <file>icons8-rotate-80.png</file>
     <file>icons8-electrical-threshold-100.png</file>
     <file>icons8-detail-100.png</file>

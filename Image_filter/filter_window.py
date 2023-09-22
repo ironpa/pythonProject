@@ -1,6 +1,7 @@
 from PySide6 import QtWidgets as qtw
 from Image_filter.UI.Image_filter import Ui_mw_filter_image
 
+
 class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
 
     def __init__(self, window):
@@ -13,6 +14,7 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
         self.pb_apply_gaussian.clicked.connect(self.blur_gaussian_image)
         self.pb_apply_rank.clicked.connect(self.rank_image)
         self.pb_apply_unsharp.clicked.connect(self.unsharp_image)
+        self.pb_mode_filter.clicked.connect(self.mode_filter_image)
         self.rb_3x3.setChecked(True)
         self.rb_min.setChecked(True)
         self.show()
@@ -21,6 +23,10 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
         if self._window.image_to_edit != None:
             self._window.pb_blur.setEnabled(True)
 
+    def mode_filter_image(self):
+
+        kernel_size = self.sb_mode_filter.value()
+        self._window.mode_filter(kernel_size)
     def unsharp_image(self):
         self._window.unsharp_mask(self.sb_unsharp_radius.value(), self.sb_un_procent.value(), self.sb_unsharp_threshold.value())
     def blur_box_image(self):
@@ -28,6 +34,7 @@ class Image_Filter(qtw.QWidget, Ui_mw_filter_image):
     def blur_gaussian_image(self):
         self._window.blur_image(self.dsb_gaussian.value(),1)
     def rank_image(self):
+
         if self.rb_3x3.isChecked():
             size = 3
         else:

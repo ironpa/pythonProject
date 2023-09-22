@@ -18,6 +18,7 @@ from Image_kernel.filter_kernel_window import FilterImageKernel
 from Image_pixel_info.pixel_info_window import ImagePixelInfo
 from Image_threshold.threshold_window import ImageThreshold
 from Image_rotate.rotate_window import ImageRotate
+from Image_enhancement.enhancement_window import ImageEnhancer
 
 class MainWindow(qtw.QMainWindow, Ui_mw_Main):
 
@@ -37,6 +38,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     imageFilterKernelUI = None
     imageTresholdUI = None
     imageRotateUI = None
+    imageEnhancementUI = None
 
     image_extrema = ()
     # Image pixel values initial variables
@@ -80,6 +82,14 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_detail.clicked.connect(self.detail_image)
         self.pb_threshold.clicked.connect(self.threshold_image_open)
         self.pb_rotate.clicked.connect(self.rotate_image_open)
+        self.pb_enhance.clicked.connect(self.enhance_image_open)
+
+    def enhance_image_open(self):
+        self.pb_enhance.setEnabled(False)
+        self.imageEnhancementUI = ImageEnhancer(self)
+    def mode_filter(self, kernel_size):
+        self.image_to_edit = self.image_to_edit.filter(ImageFilter.ModeFilter(kernel_size))
+        self.image_display(self.image_to_edit)
     def rotate_image_open(self):
         self.pb_rotate.setEnabled(False)
         self.imageRotateUI = ImageRotate(self)
@@ -261,6 +271,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_detail.setEnabled(False)
         self.pb_threshold.setEnabled(False)
         self.pb_rotate.setEnabled(False)
+        self.pb_enhance.setEnabled(False)
         self.qt_image_description.setText("No image opened...")
     def set_editing_menu(self):
         self.pb_rotate_left.setEnabled(True)
@@ -289,6 +300,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.pb_kernel.setEnabled(True)
         if not (self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible()):
             self.pb_showRGB.setEnabled(True)
+        if not (self.imageEnhancementUI is not None and self.imageEnhancementUI.isVisible()):
+            self.pb_enhance.setEnabled(True)
         if self.image_to_edit is not None and self.image_to_edit.getbands() == ("L",):
             self.pb_threshold.setEnabled(True)
         else:
@@ -310,6 +323,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
                 self.imageResizeUI.close()
             if self.imageTresholdUI is not None and self.imageTresholdUI.isVisible():
                 self.imageTresholdUI.close()
+            if self.imageEnhancementUI is not None and self.imageEnhancementUI.isVisible():
+                self.imageEnhancementUI.close()
             if self.image_to_edit is not None:
                 print("just about to close:", self.filename)
                 self.image_to_edit.close()

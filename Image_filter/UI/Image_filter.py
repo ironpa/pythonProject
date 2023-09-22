@@ -24,7 +24,7 @@ class Ui_mw_filter_image(object):
     def setupUi(self, mw_filter_image):
         if not mw_filter_image.objectName():
             mw_filter_image.setObjectName(u"mw_filter_image")
-        mw_filter_image.resize(273, 403)
+        mw_filter_image.resize(273, 485)
         self.verticalLayout_5 = QVBoxLayout(mw_filter_image)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout = QVBoxLayout()
@@ -79,14 +79,20 @@ class Ui_mw_filter_image(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.label_4 = QLabel(mw_filter_image)
         self.label_4.setObjectName(u"label_4")
+        self.label_4.setMaximumSize(QSize(60, 16777215))
 
         self.horizontalLayout_2.addWidget(self.label_4)
 
         self.dsb_gaussian = QDoubleSpinBox(mw_filter_image)
         self.dsb_gaussian.setObjectName(u"dsb_gaussian")
+        self.dsb_gaussian.setMaximumSize(QSize(60, 16777215))
         self.dsb_gaussian.setDecimals(3)
 
         self.horizontalLayout_2.addWidget(self.dsb_gaussian)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_5)
 
         self.pb_apply_gaussian = QPushButton(mw_filter_image)
         self.pb_apply_gaussian.setObjectName(u"pb_apply_gaussian")
@@ -127,12 +133,16 @@ class Ui_mw_filter_image(object):
         self.rbg_kernel_size.setObjectName(u"rbg_kernel_size")
         self.rbg_kernel_size.addButton(self.rb_3x3)
         self.rb_3x3.setObjectName(u"rb_3x3")
+        self.rb_3x3.setMinimumSize(QSize(60, 0))
+        self.rb_3x3.setMaximumSize(QSize(60, 16777215))
 
         self.horizontalLayout_4.addWidget(self.rb_3x3)
 
         self.rb_5x5 = QRadioButton(mw_filter_image)
         self.rbg_kernel_size.addButton(self.rb_5x5)
         self.rb_5x5.setObjectName(u"rb_5x5")
+        self.rb_5x5.setMinimumSize(QSize(60, 0))
+        self.rb_5x5.setMaximumSize(QSize(60, 16777215))
 
         self.horizontalLayout_4.addWidget(self.rb_5x5)
 
@@ -200,6 +210,8 @@ class Ui_mw_filter_image(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.label_7 = QLabel(mw_filter_image)
         self.label_7.setObjectName(u"label_7")
+        self.label_7.setMinimumSize(QSize(60, 0))
+        self.label_7.setMaximumSize(QSize(60, 16777215))
 
         self.horizontalLayout_5.addWidget(self.label_7)
 
@@ -210,7 +222,7 @@ class Ui_mw_filter_image(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sb_unsharp_radius.sizePolicy().hasHeightForWidth())
         self.sb_unsharp_radius.setSizePolicy(sizePolicy)
-        self.sb_unsharp_radius.setMinimumSize(QSize(0, 0))
+        self.sb_unsharp_radius.setMinimumSize(QSize(40, 0))
         self.sb_unsharp_radius.setMaximumSize(QSize(40, 16777215))
         self.sb_unsharp_radius.setMaximum(50)
         self.sb_unsharp_radius.setValue(2)
@@ -244,6 +256,8 @@ class Ui_mw_filter_image(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.label_10 = QLabel(mw_filter_image)
         self.label_10.setObjectName(u"label_10")
+        self.label_10.setMinimumSize(QSize(60, 0))
+        self.label_10.setMaximumSize(QSize(60, 16777215))
 
         self.horizontalLayout_6.addWidget(self.label_10)
 
@@ -252,7 +266,7 @@ class Ui_mw_filter_image(object):
         sizePolicy.setHeightForWidth(self.sb_unsharp_threshold.sizePolicy().hasHeightForWidth())
         self.sb_unsharp_threshold.setSizePolicy(sizePolicy)
         self.sb_unsharp_threshold.setMinimumSize(QSize(40, 0))
-        self.sb_unsharp_threshold.setMaximumSize(QSize(30, 16777215))
+        self.sb_unsharp_threshold.setMaximumSize(QSize(40, 16777215))
         self.sb_unsharp_threshold.setMaximum(255)
         self.sb_unsharp_threshold.setValue(3)
 
@@ -274,6 +288,47 @@ class Ui_mw_filter_image(object):
 
 
         self.verticalLayout_5.addLayout(self.verticalLayout_4)
+
+        self.line_3 = QFrame(mw_filter_image)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setFrameShape(QFrame.HLine)
+        self.line_3.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_5.addWidget(self.line_3)
+
+        self.label_11 = QLabel(mw_filter_image)
+        self.label_11.setObjectName(u"label_11")
+
+        self.verticalLayout_5.addWidget(self.label_11)
+
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.label_12 = QLabel(mw_filter_image)
+        self.label_12.setObjectName(u"label_12")
+
+        self.horizontalLayout_7.addWidget(self.label_12)
+
+        self.sb_mode_filter = QSpinBox(mw_filter_image)
+        self.sb_mode_filter.setObjectName(u"sb_mode_filter")
+        self.sb_mode_filter.setMinimumSize(QSize(40, 0))
+        self.sb_mode_filter.setMaximumSize(QSize(40, 16777215))
+        self.sb_mode_filter.setMinimum(3)
+        self.sb_mode_filter.setMaximum(20)
+
+        self.horizontalLayout_7.addWidget(self.sb_mode_filter)
+
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_4)
+
+        self.pb_mode_filter = QPushButton(mw_filter_image)
+        self.pb_mode_filter.setObjectName(u"pb_mode_filter")
+        self.pb_mode_filter.setMaximumSize(QSize(50, 16777215))
+
+        self.horizontalLayout_7.addWidget(self.pb_mode_filter)
+
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout_7)
 
 
         self.retranslateUi(mw_filter_image)
@@ -302,5 +357,8 @@ class Ui_mw_filter_image(object):
         self.label_8.setText(QCoreApplication.translate("mw_filter_image", u"%:", None))
         self.label_10.setText(QCoreApplication.translate("mw_filter_image", u"treshold:", None))
         self.pb_apply_unsharp.setText(QCoreApplication.translate("mw_filter_image", u"Apply", None))
+        self.label_11.setText(QCoreApplication.translate("mw_filter_image", u"Mode Filter", None))
+        self.label_12.setText(QCoreApplication.translate("mw_filter_image", u"kernel size:", None))
+        self.pb_mode_filter.setText(QCoreApplication.translate("mw_filter_image", u"Apply", None))
     # retranslateUi
 
