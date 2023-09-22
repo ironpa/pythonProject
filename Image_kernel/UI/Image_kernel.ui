@@ -20,7 +20,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -99,21 +99,27 @@
               <widget class="QDoubleSpinBox" name="dsb_scale_kernel_3x3">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
+                 <width>70</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>60</width>
+                 <width>70</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="decimals">
+                <number>4</number>
                </property>
                <property name="minimum">
                 <double>-1000.000000000000000</double>
                </property>
                <property name="maximum">
                 <double>1000.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.010000000000000</double>
                </property>
               </widget>
              </item>
@@ -242,15 +248,21 @@
               <widget class="QDoubleSpinBox" name="dsb_scale_kernel_5x5">
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
+                 <width>70</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>60</width>
+                 <width>70</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="singleStep">
+                <double>0.010000000000000</double>
                </property>
               </widget>
              </item>

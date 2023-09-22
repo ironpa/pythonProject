@@ -83,6 +83,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_threshold.clicked.connect(self.threshold_image_open)
         self.pb_rotate.clicked.connect(self.rotate_image_open)
         self.pb_enhance.clicked.connect(self.enhance_image_open)
+        self.pb_save.clicked.connect(self.save_image)
 
     def enhance_image_open(self):
         self.pb_enhance.setEnabled(False)
@@ -93,6 +94,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
     def rotate_image_open(self):
         self.pb_rotate.setEnabled(False)
         self.imageRotateUI = ImageRotate(self)
+
 
     def threshold_image_open(self):
         self.pb_threshold.setEnabled(False)
@@ -112,6 +114,8 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             if self.image_to_restore.getbands() != ("L",) and self.imageTresholdUI is not None and self.imageTresholdUI.isVisible():
                 self.imageTresholdUI.close()
             self.image_to_edit = self.image_to_restore
+            if self.imageEnhancementUI is not None and self.imageEnhancementUI.isVisible():
+                self.imageEnhancementUI.init_enhancers()
             self.set_editing_menu()
             self.image_display(self.image_to_edit)
 
@@ -272,6 +276,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_threshold.setEnabled(False)
         self.pb_rotate.setEnabled(False)
         self.pb_enhance.setEnabled(False)
+        self.pb_save.setEnabled(False)
         self.qt_image_description.setText("No image opened...")
     def set_editing_menu(self):
         self.pb_rotate_left.setEnabled(True)
@@ -280,6 +285,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         self.pb_flip.setEnabled(True)
         self.pb_clear.setEnabled(True)
         self.pb_detail.setEnabled(True)
+        self.pb_save.setEnabled(True)
         self.pb_invert_colors.setEnabled(True)
         if not (self.imageResizeUI is not None and self.imageResizeUI.isVisible()):
             self.pb_resize.setEnabled(True)
@@ -391,13 +397,17 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         #self.showInfoWindow.show()
 
     def save_image(self):
-        image_name = QFileDialog().getSaveFileName(self,'Save file')
-        # self.image_to_write = ImageQt(self.image_to_edit)
-        # self.image_to_write.sa
-        img = self.image_to_edit.convert("RGB")
-        pixel_map = qtg.QPixmap(img.toqimage())
-        print(image_name)
-        pixel_map.save(image_name[0])
+        self.pb_save.setEnabled(False)
+        try:
+            image_name = QFileDialog().getSaveFileName(self,'Save file')
+        except Exception as exception:
+            print(exception)
+
+        if image_name != None and image_name != ('',''):
+            pixel_map = qtg.QPixmap(self.image_to_edit.toqimage())
+            print("tojest to"+str(image_name))
+            pixel_map.save(image_name[0])
+        self.pb_save.setEnabled(True)
 
 
     def openFile(self):
@@ -432,10 +442,9 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             print(self.file_info)
             self.populate_initial_pixel_values(self.image_to_edit)
             print(self.image_band_values)
-            if self.image_to_edit.mode != 'CMYK':
-                self.qt_image_description.setText(self.file_info+self.image_to_edit.format +" "+ self.image_to_edit.mode)
-            else:
-                self.qt_image_description.setText(self.image_to_edit.format + " "+self.image_to_edit.mode)
+
+            self.qt_image_description.setText(self.image_to_edit.format +" "+ self.image_to_edit.mode)
+
             self.update_values()
             print(self.image_to_edit.format, self.image_to_edit.mode)
             print(path)

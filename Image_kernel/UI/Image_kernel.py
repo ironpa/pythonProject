@@ -73,10 +73,12 @@ class Ui_mw_kernel(object):
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.dsb_scale_kernel_3x3 = QDoubleSpinBox(self.tab)
         self.dsb_scale_kernel_3x3.setObjectName(u"dsb_scale_kernel_3x3")
-        self.dsb_scale_kernel_3x3.setMinimumSize(QSize(60, 0))
-        self.dsb_scale_kernel_3x3.setMaximumSize(QSize(60, 16777215))
+        self.dsb_scale_kernel_3x3.setMinimumSize(QSize(70, 0))
+        self.dsb_scale_kernel_3x3.setMaximumSize(QSize(70, 16777215))
+        self.dsb_scale_kernel_3x3.setDecimals(4)
         self.dsb_scale_kernel_3x3.setMinimum(-1000.000000000000000)
         self.dsb_scale_kernel_3x3.setMaximum(1000.000000000000000)
+        self.dsb_scale_kernel_3x3.setSingleStep(0.010000000000000)
 
         self.verticalLayout_8.addWidget(self.dsb_scale_kernel_3x3)
 
@@ -150,8 +152,10 @@ class Ui_mw_kernel(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.dsb_scale_kernel_5x5 = QDoubleSpinBox(self.tab_2)
         self.dsb_scale_kernel_5x5.setObjectName(u"dsb_scale_kernel_5x5")
-        self.dsb_scale_kernel_5x5.setMinimumSize(QSize(60, 0))
-        self.dsb_scale_kernel_5x5.setMaximumSize(QSize(60, 16777215))
+        self.dsb_scale_kernel_5x5.setMinimumSize(QSize(70, 0))
+        self.dsb_scale_kernel_5x5.setMaximumSize(QSize(70, 16777215))
+        self.dsb_scale_kernel_5x5.setDecimals(4)
+        self.dsb_scale_kernel_5x5.setSingleStep(0.010000000000000)
 
         self.verticalLayout_3.addWidget(self.dsb_scale_kernel_5x5)
 
@@ -190,7 +194,7 @@ class Ui_mw_kernel(object):
 
         self.retranslateUi(mw_kernel)
 
-        self.tw_kernel.setCurrentIndex(1)
+        self.tw_kernel.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(mw_kernel)

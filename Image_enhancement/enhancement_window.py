@@ -14,10 +14,7 @@ class ImageEnhancer(qtw.QWidget, Ui_mw_enhance_image):
 
         self._window = window
         self.image_to_enhance = copy.deepcopy(window.image_to_edit)
-        self.color_enhancer = ImageEnhance.Color(self._window.image_to_edit)
-        self.contrast_enhancer = ImageEnhance.Contrast(self._window.image_to_edit)
-        self.brightness_enhancer = ImageEnhance.Brightness(self._window.image_to_edit)
-        self.sharpness_enhancer = ImageEnhance.Sharpness(self._window.image_to_edit)
+        self.init_enhancers()
         self.setupUi(self)
 
         self.hs_color.valueChanged.connect(self.update_dsb_color)
@@ -39,6 +36,12 @@ class ImageEnhancer(qtw.QWidget, Ui_mw_enhance_image):
         self.dsb_contrast.setValue(1)
         self.dsb_brightness.setValue(1)
         self.dsb_sharpness.setValue(1)
+
+    def init_enhancers(self):
+        self.color_enhancer = ImageEnhance.Color(self._window.image_to_edit)
+        self.contrast_enhancer = ImageEnhance.Contrast(self._window.image_to_edit)
+        self.brightness_enhancer = ImageEnhance.Brightness(self._window.image_to_edit)
+        self.sharpness_enhancer = ImageEnhance.Sharpness(self._window.image_to_edit)
     def apply_color(self):
         self._window.image_to_edit = self.image_to_enhance
         self.update_enhancers()

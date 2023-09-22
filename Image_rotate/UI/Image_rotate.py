@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QHBoxLayout,
-    QLabel, QPushButton, QRadioButton, QSizePolicy,
-    QSlider, QSpinBox, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QFrame,
+    QHBoxLayout, QLabel, QPushButton, QRadioButton,
+    QSizePolicy, QSlider, QSpinBox, QVBoxLayout,
+    QWidget)
 
 class Ui_mw_rotate(object):
     def setupUi(self, mw_rotate):
@@ -53,6 +54,13 @@ class Ui_mw_rotate(object):
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.line = QFrame(mw_rotate)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout.addWidget(self.line)
+
         self.label = QLabel(mw_rotate)
         self.label.setObjectName(u"label")
 
@@ -87,6 +95,13 @@ class Ui_mw_rotate(object):
 
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
+
+        self.line_2 = QFrame(mw_rotate)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setFrameShape(QFrame.HLine)
+        self.line_2.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_2.addWidget(self.line_2)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
