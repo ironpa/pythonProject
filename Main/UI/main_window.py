@@ -519,7 +519,7 @@ class Ui_mw_Main(object):
 #endif // QT_CONFIG(tooltip)
         self.pb_flip.setText("")
 #if QT_CONFIG(tooltip)
-        self.pb_enhance.setToolTip(QCoreApplication.translate("mw_Main", u"Enhance", None))
+        self.pb_enhance.setToolTip(QCoreApplication.translate("mw_Main", u"Enhance Image", None))
 #endif // QT_CONFIG(tooltip)
         self.pb_enhance.setText("")
 #if QT_CONFIG(tooltip)

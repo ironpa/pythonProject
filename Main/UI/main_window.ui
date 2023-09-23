@@ -362,7 +362,7 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Enhance</string>
+            <string>Enhance Image</string>
            </property>
            <property name="text">
             <string/>
