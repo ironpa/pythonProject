@@ -337,7 +337,7 @@ class Ui_mw_filter_image(object):
     # setupUi
 
     def retranslateUi(self, mw_filter_image):
-        mw_filter_image.setWindowTitle(QCoreApplication.translate("mw_filter_image", u"Filter", None))
+        mw_filter_image.setWindowTitle(QCoreApplication.translate("mw_filter_image", u"Filter window", None))
         self.label.setText(QCoreApplication.translate("mw_filter_image", u"Box Blur", None))
         self.label_3.setText(QCoreApplication.translate("mw_filter_image", u"radius:", None))
         self.pb_apply_box.setText(QCoreApplication.translate("mw_filter_image", u"Apply", None))

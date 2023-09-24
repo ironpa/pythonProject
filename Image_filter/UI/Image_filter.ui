@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Filter</string>
+   <string>Filter window</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
@@ -576,7 +576,5 @@
  <buttongroups>
   <buttongroup name="rbg_filter"/>
   <buttongroup name="rbg_kernel_size"/>
-  <buttongroup name="bg_max_filter"/>
-  <buttongroup name="bg_min_filter"/>
  </buttongroups>
 </ui>
