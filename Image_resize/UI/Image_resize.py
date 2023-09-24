@@ -15,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QHeaderView, QScrollArea,
-    QSizePolicy, QTableView, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QButtonGroup, QHeaderView,
+    QScrollArea, QSizePolicy, QTableView, QVBoxLayout,
+    QWidget)
 
 class Ui_mw_image_resize(object):
     def setupUi(self, mw_image_resize):
         if not mw_image_resize.objectName():
             mw_image_resize.setObjectName(u"mw_image_resize")
-        mw_image_resize.resize(282, 218)
+        mw_image_resize.resize(285, 229)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -38,13 +39,12 @@ class Ui_mw_image_resize(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 280, 216))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 283, 227))
         sizePolicy.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
         self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
-        self.scrollAreaWidgetContents.setAutoFillBackground(False)
-        self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.scrollAreaWidgetContents.setAutoFillBackground(True)
+        self.verticalLayout_4 = QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.tv_image_resize = QTableView(self.scrollAreaWidgetContents)
         self.tv_image_resize.setObjectName(u"tv_image_resize")
         sizePolicy.setHeightForWidth(self.tv_image_resize.sizePolicy().hasHeightForWidth())
@@ -60,7 +60,7 @@ class Ui_mw_image_resize(object):
         self.tv_image_resize.verticalHeader().setVisible(False)
         self.tv_image_resize.verticalHeader().setHighlightSections(True)
 
-        self.verticalLayout_2.addWidget(self.tv_image_resize)
+        self.verticalLayout_4.addWidget(self.tv_image_resize)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 

@@ -116,6 +116,7 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
             self.image_to_edit = self.image_to_restore
             if self.imageEnhancementUI is not None and self.imageEnhancementUI.isVisible():
                 self.imageEnhancementUI.init_enhancers()
+            self.updateViews()
             self.set_editing_menu()
             self.image_display(self.image_to_edit)
 
@@ -213,6 +214,9 @@ class MainWindow(qtw.QMainWindow, Ui_mw_Main):
         if self.imageCropUI is not None and self.imageCropUI.isVisible():
             self.imageCropUI.data_model.im_width, self.imageCropUI.data_model.im_height  = self.image_to_edit.size
             self.imageCropUI.data_model.layoutChanged.emit()
+        elif self.imageCropUI is not None and not self.imageCropUI.isVisible():
+            self.imageCropUI.data_model.im_width, self.imageCropUI.data_model.im_height = self.image_to_edit.size
+
         if self.imagePixelInfoUI is not None and self.imagePixelInfoUI.isVisible():
             self.imagePixelInfoUI.data_model._model = self.image_to_edit.getbands()
             self.imagePixelInfoUI.data_model.layoutChanged.emit()

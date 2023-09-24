@@ -2,6 +2,7 @@ from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 
 from Image_resize.UI.Image_resize import Ui_mw_image_resize
+from PIL import Image
 
 
 class ResizeTableModel(qtc.QAbstractTableModel):
@@ -73,6 +74,7 @@ class ImageResize(qtw.QWidget, Ui_mw_image_resize):
         self.setupUi(self)
         self.tv_image_resize.setModel(self.data_model)
         self.show()
+
     def closeEvent(self, event) -> None:
         if self._window.image_to_edit != None:
             self._window.pb_resize.setEnabled(True)

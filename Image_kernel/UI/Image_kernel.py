@@ -201,7 +201,7 @@ class Ui_mw_kernel(object):
     # setupUi
 
     def retranslateUi(self, mw_kernel):
-        mw_kernel.setWindowTitle(QCoreApplication.translate("mw_kernel", u"Kernel", None))
+        mw_kernel.setWindowTitle(QCoreApplication.translate("mw_kernel", u"Kernel window", None))
         self.label_7.setText(QCoreApplication.translate("mw_kernel", u"kernel matrix:", None))
         self.label_11.setText(QCoreApplication.translate("mw_kernel", u"scale:", None))
         self.label_10.setText(QCoreApplication.translate("mw_kernel", u"offset:", None))
