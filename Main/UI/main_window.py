@@ -456,15 +456,12 @@ class Ui_mw_Main(object):
         self.menubar.setGeometry(QRect(0, 0, 881, 24))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
-        self.menuEdit = QMenu(self.menubar)
-        self.menuEdit.setObjectName(u"menuEdit")
         mw_Main.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(mw_Main)
         self.statusbar.setObjectName(u"statusbar")
         mw_Main.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuEdit.menuAction())
         self.menuFile.addAction(self.action_Open_file)
         self.menuFile.addAction(self.action_Quit)
         self.menuFile.addAction(self.action_save)
@@ -590,6 +587,5 @@ class Ui_mw_Main(object):
         self.qt_image_description.setText(QCoreApplication.translate("mw_Main", u"No image opened...", None))
         self.ql_coordinates.setText(QCoreApplication.translate("mw_Main", u"(0,0)", None))
         self.menuFile.setTitle(QCoreApplication.translate("mw_Main", u"File", None))
-        self.menuEdit.setTitle(QCoreApplication.translate("mw_Main", u"Edit", None))
     # retranslateUi
 
