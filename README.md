@@ -6,11 +6,14 @@
 
 To run just clone repository using bellow command:
 
-<code> git clone https://github.com/ironpa/pythonProject </code>
+```
+git clone https://github.com/ironpa/pythonProject
+```
 
 To build go to Main folder an run a command:
-
-<code> pyinstaller main.spec </code>
+```
+pyinstaller main.spec
+```
 
 <b>You can filter, crop, enhance an image and more...<b/>
 
